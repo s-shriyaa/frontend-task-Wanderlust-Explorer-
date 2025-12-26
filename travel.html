@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wanderlust Explorer</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background: #f9f9f9;
+    color: #333;
+}
+
+h1, h2 {
+    font-family: 'Playfair Display', serif;
+}
+
+/* HEADER */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    height: 70px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #0066cc;
+}
+
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #0066cc;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 70px;
+    width: 250px;
+    height: calc(100vh - 70px);
+    background: #0066cc;
+    color: #fff;
+    padding: 2rem 0;
+    transition: transform 0.3s ease;
+    z-index: 999;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar a {
+    display: block;
+    padding: 1rem 2rem;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.sidebar a:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* MAIN CONTENT */
+main {
+    margin-left: 250px;
+    margin-top: 70px;
+    padding: 2rem;
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+}
+
+/* CONTAINER GRID LAYOUT - DESKTOP */
+#container1 {
+    grid-column: 1 / -1;
+    height: 70vh;
+    min-height: 400px;
+}
+
+#container2 {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#container2 img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+#container3,
+#container6 {
+    min-height: 520px;
+    padding-bottom: 1.5rem;
+}
+
+#container4 {
+    line-height: 1.8;
+}
+
+#container5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* CAROUSEL (Container 1) */
+.carousel {
+    height: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.slides {
+    display: flex;
+    width: 400%;
+    height: 100%;
+    animation: autoSlide 20s infinite;
+}
+
+.slide {
+    width: 25%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-text {
+    background: rgba(0,0,0,0.5);
+    padding: 2rem;
+    border-radius: 12px;
+    color: #fff;
+}
+
+@keyframes autoSlide {
+    0%, 20% { transform: translateX(0); }
+    25%, 45% { transform: translateX(-25%); }
+    50%, 70% { transform: translateX(-50%); }
+    75%, 95% { transform: translateX(-75%); }
+}
+
+/* SLIDER (Container 3 & 6) */
+.slider {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.slider-content {
+    height: calc(100% - 50px);
+    margin-top: 10px;
+}
+
+.slider-inner {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease;
+}
+
+.slider-item {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    padding: 0.6rem 0.9rem;
+    font-size: 1.8rem;
+    cursor: pointer;
+    z-index: 20;
+    border: none;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.arrow:hover {
+    background: rgba(0,0,0,0.8);
+}
+
+.prev { left: 8px; }
+.next { right: 8px; }
+
+/* BUTTONS */
+.btn {
+    padding: 1.2rem 2.5rem;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btn-a {
+    background: #0066cc;
+    color: #fff;
+}
+
+.btn-b {
+    background: #ff6b6b;
+    color: #fff;
+}
+
+/* TEXT SLIDES (Container 6) */
+.text-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background: transparent;
+}
+
+.text-box {
+    width: 80%;
+    max-width: 500px;
+    background: #f5f8ff;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.text-box h3 {
+    color: #0066cc;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.text-box ul {
+    list-style: disc;
+    padding-left: 1.5rem;
+    line-height: 2;
+    font-size: 1.1rem;
+    text-align: left;
+}
+
+/* TABLET (1024px and below) */
+@media (max-width: 1024px) {
+    main {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    #container1 {
+        grid-column: 1 / -1;
+    }
+    
+    #container3,
+    #container6 {
+        grid-column: 1 / -1;
+    }
+}
+
+/* MOBILE (768px and below) */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    
+    main {
+        margin-left: 0;
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    
+    #container1 {
+        height: 50vh;
+        min-height: 300px;
+    }
+    
+    #container3,
+    #container6 {
+        min-height: 360px;
+    }
+    
+    .slider-item {
+        min-height: 300px;
+    }
+    
+    #container5 {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .hero-text {
+        padding: 1rem;
+    }
+    
+    .hero-text h1 {
+        font-size: 1.5rem;
+    }
+}
+
+/* EXTRA SMALL MOBILE (480px and below) */
+@media (max-width: 480px) {
+    header {
+        padding: 1rem;
+    }
+    
+    .logo {
+        font-size: 1.4rem;
+    }
+    
+    main {
+        padding: 0.5rem;
+        gap: 1rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .text-box {
+        padding: 1.5rem;
+    }
+    
+    .text-box h3 {
+        font-size: 1.4rem;
+    }
+    
+    .text-box ul {
+        font-size: 1rem;
+    }
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Wanderlust Explorer</div>
+    <button class="hamburger" aria-label="Menu">☰</button>
+</header>
+
+<aside class="sidebar">
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#europe">Europe</a></li>
+        <li><a href="#asia">Asia</a></li>
+        <li><a href="#africa">Africa</a></li>
+        <li><a href="#americas">Americas</a></li>
+        <li><a href="#oceania">Oceania</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</aside>
+
+<main>
+    <!-- Container 1: Image Carousel -->
+    <section id="container1" class="container">
+        <div class="carousel">
+            <div class="slides">
+                <div class="slide" style="background-image:url('https://images.pexels.com/photos/2662116/pexels-photo-2662116.jpeg')">
+                    <div class="hero-text">
+                        <h1>Explore the World</h1>
+                        <p>Discover amazing destinations</p>
+                    </div>
+                </div>
+                <div class="slide" style="background-image:url('https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg')"></div>
+                <div class="slide" style="background-image:url('https://images.pexels.com/photos/2166553/pexels-photo-2166553.jpeg')"></div>
+                <div class="slide" style="background-image:url('https://images.pexels.com/photos/3581365/pexels-photo-3581365.jpeg')"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Container 2: Text Block -->
+    <section id="container2" class="container">
+        <h2>My Travel Journey</h2>
+        <p>Stories, tips, and hidden gems from across the globe.</p>
+        <img src="https://thumbs.dreamstime.com/b/happy-hiking-woman-portrait-adventure-summer-explore-backpack-excited-smile-fitness-explorer-girl-mountain-travel-270033904.jpg" alt="Happy hiker">
+    </section>
+
+    <!-- Container 3: Interactive Slider -->
+    <section id="container3" class="container slider">
+        <h2 style="text-align:center; margin-bottom: 1rem;">Featured Adventures</h2>
+        <div class="slider-content">
+            <div class="slider-inner" id="slider3">
+                <div class="slider-item" style="background-image:url('https://images.unsplash.com/photo-1578952258885-6ee0651294e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMjA3fDB8MXxzZWFyY2h8MXx8bW91bnRhaW4lMjBhZHZlbnR1cmV8fDB8fHx8MTYyODQ0NTM3Ng&ixlib=rb-1.2.1&q=80&w=1080')"></div>
+                <div class="slider-item" style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee')"></div>
+                <div class="slider-item" style="background-image:url('https://images.unsplash.com/photo-1454430690613-c5fbdb397f65?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MTF8NDU2MTc3MHx8ZW58MHx8fHw%3D&w=1000&q=80')"></div>
+            </div>
+            <button class="arrow prev" onclick="moveSlider('slider3', -1)" aria-label="Previous">‹</button>
+            <button class="arrow next" onclick="moveSlider('slider3', 1)" aria-label="Next">›</button>
+        </div>
+    </section>
+
+    <!-- Container 4: Static Content -->
+    <section id="container4" class="container">
+        <h2>Popular Destinations</h2>
+        <p>Paris • Tokyo • New York • Bali • Santorini</p>
+        <p>Curated guides and insider tips for your next adventure.</p>
+    </section>
+
+    <!-- Container 5: Two Buttons -->
+    <section id="container5" class="container">
+        <button class="btn btn-a">Book a Trip</button>
+        <button class="btn btn-b">View Maps</button>
+    </section>
+
+    <!-- Container 6: Interactive Slider with Text -->
+    <section id="container6" class="container slider">
+        <h2 style="text-align:center; margin-bottom: 1rem;">Packing Tips & Lists</h2>
+        <div class="slider-content">
+            <div class="slider-inner" id="slider6">
+                <div class="slider-item text-slide">
+                    <div class="text-box">
+                        <h3>Packing Tips</h3>
+                        <ul>
+                            <li>Roll clothes to save space</li>
+                            <li>Keep essentials in carry-on</li>
+                            <li>Use packing cubes</li>
+                            <li>Pack versatile outfits</li>
+                            <li>Carry copies of documents</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slider-item text-slide">
+                    <div class="text-box">
+                        <h3>Packing Checklist</h3>
+                        <ul>
+                            <li>Passport & ID</li>
+                            <li>Clothes & footwear</li>
+                            <li>Toiletries</li>
+                            <li>Phone charger & power bank</li>
+                            <li>First-aid kit</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button class="arrow prev" onclick="moveSlider('slider6', -1)" aria-label="Previous">‹</button>
+            <button class="arrow next" onclick="moveSlider('slider6', 1)" aria-label="Next">›</button>
+        </div>
+    </section>
+</main>
+
+<script>
+// Hamburger menu toggle
+document.querySelector('.hamburger').addEventListener('click', function() {
+    document.querySelector('.sidebar').classList.toggle('active');
+});
+
+// Close sidebar when clicking outside on mobile
+document.addEventListener('click', function(event) {
+    const sidebar = document.querySelector('.sidebar');
+    const hamburger = document.querySelector('.hamburger');
+    
+    if (window.innerWidth <= 768 && 
+        sidebar.classList.contains('active') && 
+        !sidebar.contains(event.target) && 
+        !hamburger.contains(event.target)) {
+        sidebar.classList.remove('active');
+    }
+});
+
+// Slider functionality
+const sliders = {};
+
+function moveSlider(id, direction) {
+    if (!sliders[id]) {
+        sliders[id] = 0;
+    }
+    
+    const inner = document.getElementById(id);
+    const itemCount = inner.children.length;
+    
+    sliders[id] += direction;
+    
+    // Loop around
+    if (sliders[id] >= itemCount) {
+        sliders[id] = 0;
+    }
+    if (sliders[id] < 0) {
+        sliders[id] = itemCount - 1;
+    }
+    
+    inner.style.transform = `translateX(-${sliders[id] * 100}%)`;
+}
+
+// Optional: Add keyboard navigation for sliders
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'ArrowLeft') {
+        moveSlider('slider3', -1);
+    } else if (event.key === 'ArrowRight') {
+        moveSlider('slider3', 1);
+    }
+});
+</script>
+
+</body>
+</html>
